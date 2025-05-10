@@ -16,6 +16,7 @@ const (
 
 type Order struct {
 	gorm.Model
+	ID              uint        `json:"id" gorm:"primaryKey"`
 	UserID          uint        `json:"user_id" gorm:"index"`
 	OrderItems      []OrderItem `json:"order_items" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	TotalAmount     float64     `json:"total_amount"`
