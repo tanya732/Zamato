@@ -1,0 +1,168 @@
+{
+  "profile": {
+    "id": "1",
+    "name": "Pizza Paradise",
+    "description": "Authentic Italian pizza made with fresh ingredients and traditional recipes.",
+    "address": "123 Main St, Anytown, CA 12345",
+    "phone": "(555) 123-4567",
+    "email": "info@pizzaparadise.com",
+    "cuisine": ["Italian", "Pizza"],
+    "openingHours": [
+      { "day": "Monday", "open": "11:00", "close": "22:00", "isClosed": false },
+      { "day": "Tuesday", "open": "11:00", "close": "22:00", "isClosed": false },
+      { "day": "Wednesday", "open": "11:00", "close": "22:00", "isClosed": false },
+      { "day": "Thursday", "open": "11:00", "close": "22:00", "isClosed": false },
+      { "day": "Friday", "open": "11:00", "close": "23:00", "isClosed": false },
+      { "day": "Saturday", "open": "11:00", "close": "23:00", "isClosed": false },
+      { "day": "Sunday", "open": "12:00", "close": "21:00", "isClosed": false }
+    ],
+    "image": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "banner": "https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "isOnline": true
+  },
+  "categories": [
+    {
+      "id": "cat1",
+      "name": "Popular Items",
+      "displayOrder": 1
+    },
+    {
+      "id": "cat2",
+      "name": "Pizzas",
+      "displayOrder": 2
+    },
+    {
+      "id": "cat3",
+      "name": "Sides",
+      "displayOrder": 3
+    },
+    {
+      "id": "cat4",
+      "name": "Beverages",
+      "displayOrder": 4
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "p1",
+      "name": "Margherita Pizza",
+      "description": "Classic pizza with tomato sauce, mozzarella, and basil",
+      "price": 12.99,
+      "image": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat2",
+      "isVegetarian": true,
+      "isRecommended": true,
+      "isAvailable": true
+    },
+    {
+      "id": "p2",
+      "name": "Garlic Bread",
+      "description": "Freshly baked bread with garlic butter and herbs",
+      "price": 5.99,
+      "image": "https://images.pexels.com/photos/1855214/pexels-photo-1855214.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat3",
+      "isVegetarian": true,
+      "isRecommended": true,
+      "isAvailable": true
+    },
+    {
+      "id": "p3",
+      "name": "Pepperoni Pizza",
+      "description": "Pizza topped with pepperoni, mozzarella, and tomato sauce",
+      "price": 14.99,
+      "image": "https://images.pexels.com/photos/8969265/pexels-photo-8969265.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat2",
+      "isVegetarian": false,
+      "isRecommended": true,
+      "isAvailable": true
+    },
+    {
+      "id": "p4",
+      "name": "Vegetarian Pizza",
+      "description": "Pizza topped with bell peppers, onions, mushrooms, and olives",
+      "price": 13.99,
+      "image": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat2",
+      "isVegetarian": true,
+      "isRecommended": false,
+      "isAvailable": true
+    },
+    {
+      "id": "p5",
+      "name": "Hawaiian Pizza",
+      "description": "Pizza topped with ham, pineapple, and mozzarella",
+      "price": 15.99,
+      "image": "https://images.pexels.com/photos/4072178/pexels-photo-4072178.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat2",
+      "isVegetarian": false,
+      "isRecommended": false,
+      "isAvailable": true
+    },
+    {
+      "id": "p6",
+      "name": "Meat Lover's Pizza",
+      "description": "Pizza topped with pepperoni, sausage, bacon, and ground beef",
+      "price": 17.99,
+      "image": "https://images.pexels.com/photos/10790638/pexels-photo-10790638.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat2",
+      "isVegetarian": false,
+      "isRecommended": true,
+      "isAvailable": true
+    },
+    {
+      "id": "p7",
+      "name": "Mozzarella Sticks",
+      "description": "Breaded and fried mozzarella sticks with marinara sauce",
+      "price": 7.99,
+      "image": "https://images.pexels.com/photos/7979312/pexels-photo-7979312.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat3",
+      "isVegetarian": true,
+      "isRecommended": false,
+      "isAvailable": true
+    },
+    {
+      "id": "p8",
+      "name": "Chicken Wings",
+      "description": "Spicy chicken wings with blue cheese dressing",
+      "price": 9.99,
+      "image": "https://images.pexels.com/photos/60616/fried-chicken-chicken-fried-crunchy-60616.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat3",
+      "isVegetarian": false,
+      "isRecommended": true,
+      "isAvailable": true
+    },
+    {
+      "id": "p9",
+      "name": "Soda",
+      "description": "Choose from Coke, Diet Coke, Sprite, or Fanta",
+      "price": 2.99,
+      "image": "https://images.pexels.com/photos/2983100/pexels-photo-2983100.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat4",
+      "isVegetarian": true,
+      "isRecommended": false,
+      "isAvailable": true
+    },
+    {
+      "id": "p10",
+      "name": "Bottled Water",
+      "description": "500ml bottled water",
+      "price": 1.99,
+      "image": "https://images.pexels.com/photos/327090/pexels-photo-327090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat4",
+      "isVegetarian": true,
+      "isRecommended": false,
+      "isAvailable": true
+    },
+    {
+      "id": "p11",
+      "name": "Italian Soda",
+      "description": "Sparkling water with your choice of fruit syrup",
+      "price": 3.99,
+      "image": "https://images.pexels.com/photos/1292862/pexels-photo-1292862.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "category": "cat4",
+      "isVegetarian": true,
+      "isRecommended": true,
+      "isAvailable": true
+    }
+  ]
+}
