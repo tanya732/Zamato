@@ -104,37 +104,3 @@ func TestOrderRepository_CRUD(t *testing.T) {
 		assert.Nil(t, got)
 	})
 }
-
-// Additional test using a mock DB to simulate DB errors
-// func TestOrderRepository_DBError(t *testing.T) {
-// 	ctrl := gomock.NewController(t)
-// 	defer ctrl.Finish()
-//
-// 	mockDB := mocks.NewMockGormDB(ctrl)
-// 	repo := &orderRepository{db: (*gorm.DB)(nil)} // Not used directly
-//
-// 	// Simulate Create error
-// 	mockDB.EXPECT().Create(gomock.Any()).Return(&gorm.DB{Error: errors.New("create error")})
-// 	err := repo.Create(&models.Order{})
-// 	assert.Error(t, err)
-//
-// 	// Simulate GetByID error
-// 	mockDB.EXPECT().Preload("OrderItems").Return(mockDB)
-// 	mockDB.EXPECT().First(gomock.Any(), gomock.Any()).Return(&gorm.DB{Error: errors.New("not found")})
-// 	_, err = repo.GetByID(1)
-// 	assert.Error(t, err)
-//
-// 	// Simulate UpdateStatus error
-// 	mockDB.EXPECT().Model(gomock.Any()).Return(mockDB)
-// 	mockDB.EXPECT().Where(gomock.Any(), gomock.Any()).Return(mockDB)
-// 	mockDB.EXPECT().Update(gomock.Any(), gomock.Any()).Return(&gorm.DB{Error: errors.New("update error")})
-// 	err = repo.UpdateStatus(1, models.StatusDelivered)
-// 	assert.Error(t, err)
-//
-// 	// Simulate UpdatePayment error
-// 	mockDB.EXPECT().Model(gomock.Any()).Return(mockDB)
-// 	mockDB.EXPECT().Where(gomock.Any(), gomock.Any()).Return(mockDB)
-// 	mockDB.EXPECT().Updates(gomock.Any()).Return(&gorm.DB{Error: errors.New("update payment error")})
-// 	err = repo.UpdatePayment(1, "pay_123")
-// 	assert.Error(t, err)
-// }
