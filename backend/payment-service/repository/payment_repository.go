@@ -1,17 +1,26 @@
 package repository
 
 import (
-	"payment-service/contracts"
 	"payment-service/models"
 
 	"gorm.io/gorm"
 )
 
+// PaymentRepository defines the repository interface for payment persistence.
+type PaymentRepository interface {
+	Save(payment *models.Payment) error
+	FindByID(id string) (*models.Payment, error)
+	FindByOrderID(orderID string) ([]*models.Payment, error)
+	SaveRefund(refund *models.Refund) error
+	FindRefundByPaymentID(paymentID string) (*models.Refund, error)
+	UpdatePaymentStatus(id, status string) error
+}
+
 type paymentRepository struct {
 	db *gorm.DB
 }
 
-func NewPaymentRepository(db *gorm.DB) contracts.PaymentRepository {
+func NewPaymentRepository(db *gorm.DB) PaymentRepository {
 	return &paymentRepository{db: db}
 }
 
