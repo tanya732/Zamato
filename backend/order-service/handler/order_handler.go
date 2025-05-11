@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"order-service/models"
+	"order-service/contracts"
 	"order-service/service"
 
 	"github.com/gorilla/mux"
@@ -20,10 +20,7 @@ func NewOrderHandler(service service.OrderService) *OrderHandler {
 }
 
 func (h *OrderHandler) Checkout(w http.ResponseWriter, r *http.Request) {
-	var request struct {
-		Items   []models.OrderItem `json:"items"`
-		Address string             `json:"delivery_address"`
-	}
+	var request contracts.CheckoutRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -39,8 +36,8 @@ func (h *OrderHandler) Checkout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]interface{}{
-		"order_id": strconv.FormatUint(order.ID, 10),
+	json.NewEncoder(w).Encode(contracts.CheckoutResponse{
+		OrderID: strconv.FormatUint(order.ID, 10),
 	})
 }
 
@@ -63,7 +60,6 @@ func (h *OrderHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	orderID := vars["id"]
 
-	// Validate orderID is numeric
 	if _, err := strconv.ParseUint(orderID, 10, 64); err != nil {
 		http.Error(w, "invalid order id", http.StatusBadRequest)
 		return
@@ -87,15 +83,12 @@ func (h *OrderHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request)
 	vars := mux.Vars(r)
 	orderID := vars["id"]
 
-	// Validate orderID is numeric
 	if _, err := strconv.ParseUint(orderID, 10, 64); err != nil {
 		http.Error(w, "invalid order id", http.StatusBadRequest)
 		return
 	}
 
-	var req struct {
-		Status models.OrderStatus `json:"status"`
-	}
+	var req contracts.UpdateOrderStatusRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "invalid request body: "+err.Error(), http.StatusBadRequest)
 		return
@@ -113,15 +106,12 @@ func (h *OrderHandler) ProcessPayment(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	orderID := vars["orderId"]
 
-	// Validate orderID is numeric
 	if _, err := strconv.ParseUint(orderID, 10, 64); err != nil {
 		http.Error(w, "invalid order id", http.StatusBadRequest)
 		return
 	}
 
-	var req struct {
-		PaymentID string `json:"payment_id"`
-	}
+	var req contracts.ProcessPaymentRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "invalid request body: "+err.Error(), http.StatusBadRequest)
 		return
