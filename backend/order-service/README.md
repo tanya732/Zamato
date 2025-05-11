@@ -4,6 +4,14 @@ This service handles order-related operations such as creating orders, fetching 
 
 ---
 
+## Running Postgres with Docker
+
+```bash
+docker run --name order-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=order_db -p 5433:5432 -d postgres:15
+```
+
+---
+
 ## API Endpoints
 
 ### 1. **Checkout (Create Order)**
