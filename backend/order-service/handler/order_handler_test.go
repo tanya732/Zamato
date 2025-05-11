@@ -180,8 +180,8 @@ func TestOrderHandler_GetOrderById(t *testing.T) {
 			id:   "1",
 			mockSetup: func(m *mocks.MockOrderService) {
 				m.EXPECT().
-					GetOrder(uint(1)).
-					Return(&models.Order{ID: 1}, nil)
+					GetOrder("1").
+					Return(&models.Order{ID: 1, UserID: 1}, nil)
 			},
 			wantStatus: http.StatusOK,
 		},
@@ -194,11 +194,11 @@ func TestOrderHandler_GetOrderById(t *testing.T) {
 		},
 		{
 			name: "not found",
-			id:   "2",
+			id:   "999",
 			mockSetup: func(m *mocks.MockOrderService) {
 				m.EXPECT().
-					GetOrder(uint(2)).
-					Return(nil, errors.New("not found"))
+					GetOrder("999").
+					Return(nil, errors.New("record not found"))
 			},
 			wantStatus:     http.StatusNotFound,
 			wantErrContain: "order not found",
@@ -242,7 +242,7 @@ func TestOrderHandler_UpdateOrderStatus(t *testing.T) {
 			body: map[string]interface{}{"status": models.StatusDelivered},
 			mockSetup: func(m *mocks.MockOrderService) {
 				m.EXPECT().
-					UpdateOrderStatus(uint(1), models.StatusDelivered).
+					UpdateOrderStatus("1", models.StatusDelivered).
 					Return(nil)
 			},
 			wantStatus: http.StatusNoContent,
@@ -269,7 +269,7 @@ func TestOrderHandler_UpdateOrderStatus(t *testing.T) {
 			body: map[string]interface{}{"status": models.StatusDelivered},
 			mockSetup: func(m *mocks.MockOrderService) {
 				m.EXPECT().
-					UpdateOrderStatus(uint(1), models.StatusDelivered).
+					UpdateOrderStatus("1", models.StatusDelivered).
 					Return(errors.New("update error"))
 			},
 			wantStatus:     http.StatusInternalServerError,
@@ -321,7 +321,7 @@ func TestOrderHandler_ProcessPayment(t *testing.T) {
 			body:    map[string]interface{}{"payment_id": "pay_123"},
 			mockSetup: func(m *mocks.MockOrderService) {
 				m.EXPECT().
-					ProcessPayment(uint(1), "pay_123").
+					ProcessPayment("1", "pay_123").
 					Return(nil)
 			},
 			wantStatus: http.StatusNoContent,
@@ -348,7 +348,7 @@ func TestOrderHandler_ProcessPayment(t *testing.T) {
 			body:    map[string]interface{}{"payment_id": "pay_123"},
 			mockSetup: func(m *mocks.MockOrderService) {
 				m.EXPECT().
-					ProcessPayment(uint(1), "pay_123").
+					ProcessPayment("1", "pay_123").
 					Return(errors.New("payment error"))
 			},
 			wantStatus:     http.StatusInternalServerError,
@@ -373,7 +373,7 @@ func TestOrderHandler_ProcessPayment(t *testing.T) {
 			h := NewOrderHandler(mockSvc)
 			vars := map[string]string{"orderId": tt.orderID}
 			req = mux.SetURLVars(req, vars)
-			h.ProcessPayment(rr, req)
+			h.ProcessPayment(rr, req) // Call the handler
 			assert.Equal(t, tt.wantStatus, rr.Code)
 			if tt.wantErrContain != "" {
 				assert.Contains(t, rr.Body.String(), tt.wantErrContain)
