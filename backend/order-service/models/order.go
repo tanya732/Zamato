@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -15,14 +17,16 @@ const (
 )
 
 type Order struct {
-	gorm.Model
-	ID              uint        `json:"id" gorm:"primaryKey"`
+	ID              uint64      `json:"id" gorm:"primaryKey"`
 	UserID          uint        `json:"user_id" gorm:"index"`
 	OrderItems      []OrderItem `json:"order_items" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	TotalAmount     float64     `json:"total_amount"`
 	Status          OrderStatus `json:"status" gorm:"type:varchar(20);index"`
 	PaymentID       *string     `json:"payment_id"`
 	DeliveryAddress string      `json:"delivery_address"`
+	CreatedAt       time.Time   `json:"created_at"`
+	UpdatedAt       time.Time   `json:"updated_at"`
+	DeletedAt       *time.Time  `json:"deleted_at,omitempty" gorm:"index"`
 }
 
 type OrderItem struct {
