@@ -19,7 +19,6 @@ import (
 func main() {
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
-		// Fallback to glassbreak configs for local/dev
 		dsn = "host=localhost user=glassbreak password=glassbreak dbname=glassbreak port=5432 sslmode=disable"
 		log.Println("DATABASE_URL not set, using glassbreak fallback config")
 	}
