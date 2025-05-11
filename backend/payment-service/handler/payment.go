@@ -3,18 +3,17 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	"payment-service/contracts"
-	"payment-service/middleware"
 	"payment-service/models"
+	"payment-service/service"
 
 	"github.com/gorilla/mux"
 )
 
 type PaymentHandler struct {
-	service contracts.PaymentService
+	service service.PaymentService
 }
 
-func NewPaymentHandler(s contracts.PaymentService) *PaymentHandler {
+func NewPaymentHandler(s service.PaymentService) *PaymentHandler {
 	return &PaymentHandler{service: s}
 }
 
@@ -81,14 +80,4 @@ func (h *PaymentHandler) PaymentWebhook(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-}
-
-// Optionally, you can add a function to register routes with middleware
-func RegisterPaymentRoutes(r *mux.Router, h *PaymentHandler) {
-	r.Handle("/payments", middleware.AuthMiddleware(http.HandlerFunc(h.CreatePayment))).Methods("POST")
-	r.Handle("/payments/{id}", middleware.AuthMiddleware(http.HandlerFunc(h.GetPayment))).Methods("GET")
-	r.Handle("/payments", middleware.AuthMiddleware(http.HandlerFunc(h.ListPayments))).Methods("GET").Queries("order_id", "{order_id}")
-	r.Handle("/payments/{id}/refund", middleware.AuthMiddleware(http.HandlerFunc(h.InitiateRefund))).Methods("POST")
-	r.Handle("/payments/{id}/refund", middleware.AuthMiddleware(http.HandlerFunc(h.GetRefundStatus))).Methods("GET")
-	r.Handle("/payments/webhook", http.HandlerFunc(h.PaymentWebhook)).Methods("POST") // Webhook may not require auth
 }
