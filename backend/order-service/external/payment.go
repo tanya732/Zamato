@@ -4,19 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+	"order-service/contracts"
 )
 
-type PaymentRequest struct {
-	OrderID string  `json:"order_id"`
-	Amount  float64 `json:"amount"`
-}
-
-type PaymentResponse struct {
-	PaymentID string `json:"payment_id"`
-	Status    string `json:"status"`
-}
-
-func ProcessPayment(url string, request PaymentRequest) (*PaymentResponse, error) {
+func ProcessPayment(url string, request contracts.PaymentRequest) (*contracts.PaymentResponse, error) {
 	body, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
@@ -28,7 +19,7 @@ func ProcessPayment(url string, request PaymentRequest) (*PaymentResponse, error
 	}
 	defer resp.Body.Close()
 
-	var response PaymentResponse
+	var response contracts.PaymentResponse
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
 		return nil, err
 	}
