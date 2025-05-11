@@ -48,7 +48,6 @@ func main() {
 	api.HandleFunc("/orders", orderHandler.GetOrderHistory).Methods("GET")
 	api.HandleFunc("/orders/{id}", orderHandler.GetOrderById).Methods("GET")
 	api.HandleFunc("/orders/{id}/status", orderHandler.UpdateOrderStatus).Methods("PATCH")
-	api.HandleFunc("/pay/{orderId}", orderHandler.ProcessPayment).Methods("POST")
 
 	// Health check
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
