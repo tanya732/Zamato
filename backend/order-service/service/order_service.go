@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"order-service/contracts"
 	"order-service/external"
 	"order-service/models"
 	"order-service/repository"
@@ -16,7 +17,7 @@ type OrderService interface {
 	GetOrderHistory(userID uint) ([]models.Order, error)
 	GetOrder(orderID string) (*models.Order, error)
 	UpdateOrderStatus(orderID string, status models.OrderStatus) error
-	ProcessPayment(orderID string, paymentID string) error // Add this line
+	ProcessPayment(orderID string, paymentID string) error
 }
 
 type orderService struct {
@@ -66,7 +67,7 @@ func (s *orderService) CreateOrder(userID uint, items []models.OrderItem, addres
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		paymentRequest := external.PaymentRequest{
+		paymentRequest := contracts.PaymentRequest{
 			OrderID: strconv.FormatUint(orderID, 10), // Convert uint64 to string
 			Amount:  total,
 		}
