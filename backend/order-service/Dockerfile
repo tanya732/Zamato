@@ -22,6 +22,9 @@ FROM alpine:latest
 # Install necessary certificates for HTTPS
 RUN apk --no-cache add ca-certificates
 
+# Install Postgres dependency
+RUN apk --no-cache add postgresql-client
+
 # Set the working directory inside the container
 WORKDIR /root/
 
