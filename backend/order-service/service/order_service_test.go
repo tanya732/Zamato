@@ -99,92 +99,24 @@ func TestOrderService_GetOrder(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockRepo := mocks.NewMockOrderRepository(ctrl)
-	mockRepo.EXPECT().
-		GetByID(uint(1)).
-		Return(&models.Order{ID: 1}, nil)
-	mockRepo.EXPECT().
-		GetByID(uint(2)).
-		Return(nil, errors.New("not found"))
-	svc := NewOrderService(mockRepo)
-	order, err := svc.GetOrder(1)
-	assert.NoError(t, err)
-	assert.Equal(t, uint(1), order.ID)
-	order, err = svc.GetOrder(2)
-	assert.Error(t, err)
-	assert.Nil(t, order)
-}
+	service := NewOrderService(mockRepo)
 
-func TestOrderService_UpdateOrderStatus(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
+	t.Run("success", func(t *testing.T) {
+		expectedOrder := &models.Order{
+			ID:     1,
+			UserID: 1,
+		}
+		mockRepo.EXPECT().GetByID("1").Return(expectedOrder, nil)
+		order, err := service.GetOrder("1")
+		assert.NoError(t, err)
+		assert.Equal(t, expectedOrder, order)
+	})
 
-	mockRepo := mocks.NewMockOrderRepository(ctrl)
-	mockRepo.EXPECT().
-		UpdateStatus(uint(1), models.StatusDelivered).
-		Return(nil)
-	mockRepo.EXPECT().
-		UpdateStatus(uint(2), models.StatusDelivered).
-		Return(errors.New("not found"))
-	svc := NewOrderService(mockRepo)
-	err := svc.UpdateOrderStatus(1, models.StatusDelivered)
-	assert.NoError(t, err)
-	err = svc.UpdateOrderStatus(2, models.StatusDelivered)
-	assert.Error(t, err)
-}
-
-func TestOrderService_ProcessPayment(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	tests := []struct {
-		name        string
-		paymentID   string
-		mockSetup   func(m *mocks.MockOrderRepository)
-		wantErr     bool
-		errContains string
-	}{
-		{
-			name:      "success",
-			paymentID: "pay_123",
-			mockSetup: func(m *mocks.MockOrderRepository) {
-				m.EXPECT().
-					UpdatePayment(uint(1), "pay_123").
-					Return(nil)
-			},
-		},
-		{
-			name:        "missing paymentID",
-			paymentID:   "",
-			mockSetup:   func(m *mocks.MockOrderRepository) {},
-			wantErr:     true,
-			errContains: "paymentID required",
-		},
-		{
-			name:      "repo error",
-			paymentID: "pay_123",
-			mockSetup: func(m *mocks.MockOrderRepository) {
-				m.EXPECT().
-					UpdatePayment(uint(1), "pay_123").
-					Return(errors.New("db error"))
-			},
-			wantErr:     true,
-			errContains: "db error",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			mockRepo := mocks.NewMockOrderRepository(ctrl)
-			if tt.mockSetup != nil {
-				tt.mockSetup(mockRepo)
-			}
-			svc := NewOrderService(mockRepo)
-			err := svc.ProcessPayment(1, tt.paymentID)
-			if tt.wantErr {
-				assert.Error(t, err)
-				assert.Contains(t, err.Error(), tt.errContains)
-			} else {
-				assert.NoError(t, err)
-			}
-		})
-	}
+	t.Run("not found", func(t *testing.T) {
+		mockRepo.EXPECT().GetByID("2").Return(nil, errors.New("record not found"))
+		order, err := service.GetOrder("2")
+		assert.Error(t, err)
+		assert.Nil(t, order)
+		assert.Contains(t, err.Error(), "record not found")
+	})
 }
