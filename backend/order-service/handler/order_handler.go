@@ -39,7 +39,9 @@ func (h *OrderHandler) Checkout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(order)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"order_id": strconv.FormatUint(order.ID, 10),
+	})
 }
 
 func (h *OrderHandler) GetOrderHistory(w http.ResponseWriter, r *http.Request) {
@@ -58,59 +60,77 @@ func (h *OrderHandler) GetOrderHistory(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *OrderHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
-	idStr := mux.Vars(r)["id"]
-	id, err := strconv.ParseUint(idStr, 10, 64)
-	if err != nil {
+	vars := mux.Vars(r)
+	orderID := vars["id"]
+
+	// Validate orderID is numeric
+	if _, err := strconv.ParseUint(orderID, 10, 64); err != nil {
 		http.Error(w, "invalid order id", http.StatusBadRequest)
 		return
 	}
-	order, err := h.service.GetOrder(uint(id))
+
+	order, err := h.service.GetOrder(orderID)
 	if err != nil {
-		http.Error(w, "order not found", http.StatusNotFound)
+		if err.Error() == "record not found" {
+			http.Error(w, "order not found", http.StatusNotFound)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(order)
 }
 
 func (h *OrderHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) {
-	idStr := mux.Vars(r)["id"]
-	id, err := strconv.ParseUint(idStr, 10, 64)
-	if err != nil {
+	vars := mux.Vars(r)
+	orderID := vars["id"]
+
+	// Validate orderID is numeric
+	if _, err := strconv.ParseUint(orderID, 10, 64); err != nil {
 		http.Error(w, "invalid order id", http.StatusBadRequest)
 		return
 	}
+
 	var req struct {
 		Status models.OrderStatus `json:"status"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "invalid request body: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	if err := h.service.UpdateOrderStatus(uint(id), req.Status); err != nil {
+
+	if err := h.service.UpdateOrderStatus(orderID, req.Status); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	w.WriteHeader(http.StatusNoContent)
 }
 
 func (h *OrderHandler) ProcessPayment(w http.ResponseWriter, r *http.Request) {
-	orderIDStr := mux.Vars(r)["orderId"]
-	orderID, err := strconv.ParseUint(orderIDStr, 10, 64)
-	if err != nil {
+	vars := mux.Vars(r)
+	orderID := vars["orderId"]
+
+	// Validate orderID is numeric
+	if _, err := strconv.ParseUint(orderID, 10, 64); err != nil {
 		http.Error(w, "invalid order id", http.StatusBadRequest)
 		return
 	}
+
 	var req struct {
 		PaymentID string `json:"payment_id"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "invalid request body: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	if err := h.service.ProcessPayment(uint(orderID), req.PaymentID); err != nil {
+
+	if err := h.service.ProcessPayment(orderID, req.PaymentID); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	w.WriteHeader(http.StatusNoContent)
 }
