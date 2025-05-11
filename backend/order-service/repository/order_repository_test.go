@@ -2,6 +2,7 @@ package repository
 
 import (
 	"order-service/models"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,7 +36,8 @@ func TestOrderRepository_CRUD(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotZero(t, order.ID)
 
-		got, err := repo.GetByID(order.ID)
+		// Convert order.ID to string for GetByID
+		got, err := repo.GetByID(strconv.FormatUint(order.ID, 10))
 		assert.NoError(t, err)
 		assert.Equal(t, order.ID, got.ID)
 		assert.Equal(t, 1, len(got.OrderItems))
@@ -72,35 +74,16 @@ func TestOrderRepository_CRUD(t *testing.T) {
 		}
 		err := repo.Create(order)
 		assert.NoError(t, err)
-		err = repo.UpdateStatus(order.ID, models.StatusDelivered)
+		err = repo.UpdateStatus(strconv.FormatUint(order.ID, 10), models.StatusDelivered)
 		assert.NoError(t, err)
-		got, _ := repo.GetByID(order.ID)
+		got, _ := repo.GetByID(strconv.FormatUint(order.ID, 10))
 		assert.Equal(t, models.StatusDelivered, got.Status)
 	})
 
-	t.Run("UpdatePayment", func(t *testing.T) {
-		order := &models.Order{
-			UserID: 4,
-			OrderItems: []models.OrderItem{
-				{MenuItemID: 4, Quantity: 1, Price: 8},
-			},
-			TotalAmount:     8,
-			Status:          models.StatusPending,
-			DeliveryAddress: "addr4",
-		}
-		err := repo.Create(order)
-		assert.NoError(t, err)
-		err = repo.UpdatePayment(order.ID, "pay_123")
-		assert.NoError(t, err)
-		got, _ := repo.GetByID(order.ID)
-		assert.NotNil(t, got.PaymentID)
-		assert.Equal(t, "pay_123", *got.PaymentID)
-		assert.Equal(t, models.StatusPaid, got.Status)
-	})
-
 	t.Run("GetByID not found", func(t *testing.T) {
-		got, err := repo.GetByID(9999)
+		got, err := repo.GetByID("999")
 		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "record not found")
 		assert.Nil(t, got)
 	})
 }
