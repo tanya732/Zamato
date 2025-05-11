@@ -55,7 +55,7 @@ func (mr *MockOrderServiceMockRecorder) GetOrderHistory(userID interface{}) *gom
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrderHistory", reflect.TypeOf((*MockOrderService)(nil).GetOrderHistory), userID)
 }
 
-func (m *MockOrderService) GetOrder(id uint) (*models.Order, error) {
+func (m *MockOrderService) GetOrder(id string) (*models.Order, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOrder", id)
 	ret0, _ := ret[0].(*models.Order)
@@ -68,7 +68,7 @@ func (mr *MockOrderServiceMockRecorder) GetOrder(id interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrder", reflect.TypeOf((*MockOrderService)(nil).GetOrder), id)
 }
 
-func (m *MockOrderService) UpdateOrderStatus(id uint, status models.OrderStatus) error {
+func (m *MockOrderService) UpdateOrderStatus(id string, status models.OrderStatus) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateOrderStatus", id, status)
 	ret0, _ := ret[0].(error)
@@ -80,7 +80,7 @@ func (mr *MockOrderServiceMockRecorder) UpdateOrderStatus(id, status interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOrderStatus", reflect.TypeOf((*MockOrderService)(nil).UpdateOrderStatus), id, status)
 }
 
-func (m *MockOrderService) ProcessPayment(orderID uint, paymentID string) error {
+func (m *MockOrderService) ProcessPayment(orderID string, paymentID string) error { // Updated to use string for orderID
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ProcessPayment", orderID, paymentID)
 	ret0, _ := ret[0].(error)
