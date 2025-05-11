@@ -41,7 +41,7 @@ func (mr *MockOrderRepositoryMockRecorder) Create(order interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderRepository)(nil).Create), order)
 }
 
-func (m *MockOrderRepository) GetByID(id uint) (*models.Order, error) {
+func (m *MockOrderRepository) GetByID(id string) (*models.Order, error) { // Updated to use string
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", id)
 	ret0, _ := ret[0].(*models.Order)
@@ -67,7 +67,7 @@ func (mr *MockOrderRepositoryMockRecorder) GetUserOrders(userID interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserOrders", reflect.TypeOf((*MockOrderRepository)(nil).GetUserOrders), userID)
 }
 
-func (m *MockOrderRepository) UpdateStatus(id uint, status models.OrderStatus) error {
+func (m *MockOrderRepository) UpdateStatus(id string, status models.OrderStatus) error { // Updated to use string
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateStatus", id, status)
 	ret0, _ := ret[0].(error)
