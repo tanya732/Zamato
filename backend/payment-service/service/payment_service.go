@@ -2,24 +2,34 @@ package service
 
 import (
 	"io"
-	"payment-service/contracts"
 	"payment-service/external"
 	"payment-service/models"
+	"payment-service/repository"
 	"time"
 )
 
+// PaymentService defines the service interface for payment operations.
+type PaymentService interface {
+	CreatePayment(payment *models.Payment) error
+	GetPayment(id string) (*models.Payment, error)
+	ListPaymentsByOrder(orderID string) ([]*models.Payment, error)
+	InitiateRefund(paymentID string) (*models.Refund, error)
+	GetRefundStatus(paymentID string) (*models.Refund, error)
+	HandleWebhook(body io.Reader) error
+}
+
 type paymentService struct {
-	repo    contracts.PaymentRepository
+	repo    repository.PaymentRepository
 	gateway external.PaymentGateway
 }
 
-func NewPaymentService(r contracts.PaymentRepository, g external.PaymentGateway) contracts.PaymentService {
+func NewPaymentService(r repository.PaymentRepository, g external.PaymentGateway) PaymentService {
 	return &paymentService{repo: r, gateway: g}
 }
 
 func (s *paymentService) CreatePayment(payment *models.Payment) error {
 	// Process payment using gateway
-	txID, err := s.gateway.Process(payment.Amount)
+	txID, err := s.gateway.Process(float64(payment.Amount))
 	if err != nil {
 		return err
 	}
