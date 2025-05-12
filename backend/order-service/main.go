@@ -17,7 +17,12 @@ import (
 
 func main() {
 	// Database connection
-	dsn := "host=localhost user=postgres password=postgres dbname=order_service port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "host=localhost user=glassbreak password=glassbreak dbname=glassbreak port=5432 sslmode=disable"
+		log.Println("DATABASE_URL not set, using glassbreak fallback config")
+	}
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
@@ -67,8 +72,8 @@ func main() {
 	}
 
 	// Start server
-	log.Printf("Server starting on port %s", port)
+	log.Printf("Starting order-service on port %s", port)
 	if err := server.ListenAndServe(); err != nil {
-		log.Fatal("Server failed to start:", err)
+		log.Fatal("Server failed to start order-service:", err)
 	}
 }
