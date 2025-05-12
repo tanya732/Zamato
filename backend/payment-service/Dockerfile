@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o payment-service .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o payment-service .
 
 # Start a new stage from scratch
 FROM alpine:latest
