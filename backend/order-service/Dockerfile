@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go application
-RUN go build -o order-service .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o order-service .
 
 # Use a minimal image for the final container
 FROM alpine:latest
