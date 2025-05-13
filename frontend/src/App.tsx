@@ -9,6 +9,7 @@ import { CartPage } from '@/pages/CartPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { RestaurantDashboard } from '@/pages/restaurant/RestaurantDashboard';
+import { ProfilePage } from "@/pages/ProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/restaurant/dashboard" element={<RestaurantDashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Router>
       <Toaster position="top-right" />
