@@ -6,7 +6,7 @@ import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
 import { Avatar } from "@/components/ui/avatar";
 import {
-  BadgeCheck, Mail, Phone, MapPin, Calendar, User, Star, Settings, ChevronRight, ShoppingBag
+  BadgeCheck, Mail, Phone, MapPin, Calendar, User, Star, Settings, ChevronRight, ShoppingBag, Heart
 } from "lucide-react";
 
 export const ProfilePage: React.FC = () => {
@@ -143,6 +143,38 @@ export const ProfilePage: React.FC = () => {
               </Card>
             </motion.div>
 
+            {/* Favorites Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+            >
+              <Card className="rounded-xl shadow-lg border-0 bg-white/95">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Heart className="h-6 w-6 text-pink-500" />
+                    <span className="text-lg font-semibold text-foodly-primary">Favorites</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">Sushi World</span>
+                      <span className="text-xs text-muted-foreground">Restaurant</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">Spicy Paneer Pizza</span>
+                      <span className="text-xs text-muted-foreground">Dish</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    className="mt-4 w-full flex items-center justify-between text-foodly-primary hover:underline"
+                  >
+                    View All Favorites <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
             {/* Settings Card */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -164,9 +196,6 @@ export const ProfilePage: React.FC = () => {
                     </Button>
                     <Button variant="secondary" className="flex-1 min-w-[120px]">
                       Payment Methods
-                    </Button>
-                    <Button variant="destructive" className="flex-1 min-w-[120px]">
-                      Logout
                     </Button>
                   </div>
                 </CardContent>
