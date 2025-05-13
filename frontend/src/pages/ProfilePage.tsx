@@ -6,7 +6,7 @@ import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
 import { Avatar } from "@/components/ui/avatar";
 import {
-  BadgeCheck, Mail, Phone, MapPin, Calendar, User, Star, Settings, ChevronRight, ShoppingBag, Heart
+  BadgeCheck, Mail, Phone, MapPin, Calendar, User, Star, Settings, ChevronRight, ShoppingBag, Heart, Home
 } from "lucide-react";
 
 export const ProfilePage: React.FC = () => {
@@ -25,7 +25,13 @@ export const ProfilePage: React.FC = () => {
             <Card className="shadow-2xl rounded-2xl border-0 bg-white/90 backdrop-blur-md">
               <CardContent className="p-8 flex flex-col items-center">
                 <div className="relative mb-4">
-                  <Avatar className="h-24 w-24 ring-4 ring-foodly-primary/20 shadow-lg" />
+                  <Avatar className="h-24 w-24 ring-4 ring-foodly-primary/20 shadow-lg">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Jane+Doe&background=foodly-primary&color=fff&size=128"
+                      alt="Jane Doe"
+                      className="h-24 w-24 rounded-full object-cover"
+                    />
+                  </Avatar>
                   <span className="absolute bottom-2 right-2 bg-foodly-primary rounded-full p-1">
                     <BadgeCheck className="h-5 w-5 text-white" />
                   </span>
@@ -170,6 +176,38 @@ export const ProfilePage: React.FC = () => {
                     className="mt-4 w-full flex items-center justify-between text-foodly-primary hover:underline"
                   >
                     View All Favorites <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Addresses Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.28 }}
+            >
+              <Card className="rounded-xl shadow-lg border-0 bg-white/95">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Home className="h-6 w-6 text-foodly-primary" />
+                    <span className="text-lg font-semibold text-foodly-primary">Saved Addresses</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="font-medium">Home:</span>
+                      <span className="ml-2 text-muted-foreground">123 Main St, Springfield</span>
+                    </div>
+                    <div>
+                      <span className="font-medium">Work:</span>
+                      <span className="ml-2 text-muted-foreground">456 Office Park, Springfield</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    className="mt-4 w-full flex items-center justify-between text-foodly-primary hover:underline"
+                  >
+                    Manage Addresses <ChevronRight className="h-4 w-4 ml-1" />
                   </Button>
                 </CardContent>
               </Card>
