@@ -230,9 +230,6 @@ export const ProfilePage: React.FC = () => {
                       Change Password
                     </Button>
                     <Button variant="secondary" className="flex-1 min-w-[120px]">
-                      Manage Addresses
-                    </Button>
-                    <Button variant="secondary" className="flex-1 min-w-[120px]">
                       Payment Methods
                     </Button>
                   </div>
