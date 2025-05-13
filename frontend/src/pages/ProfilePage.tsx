@@ -21,8 +21,9 @@ export const ProfilePage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="w-full max-w-md md:max-w-sm"
+            whileHover={{ scale: 1.025, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)" }}
           >
-            <Card className="shadow-2xl rounded-2xl border-0 bg-white/90 backdrop-blur-md">
+            <Card className="shadow-2xl rounded-2xl border-0 bg-white/60 dark:bg-foodly-primary/10 backdrop-blur-2xl transition-all duration-300">
               <CardContent className="p-8 flex flex-col items-center">
                 <div className="relative mb-4">
                   <Avatar className="h-24 w-24 ring-4 ring-foodly-primary/20 shadow-lg">
@@ -85,8 +86,9 @@ export const ProfilePage: React.FC = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ scale: 1.025, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)" }}
             >
-              <Card className="rounded-xl shadow-lg border-0 bg-white/95 hover:shadow-2xl transition-all cursor-pointer group">
+              <Card className="rounded-xl shadow-lg border-0 bg-white/60 dark:bg-foodly-primary/10 backdrop-blur-2xl transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <ShoppingBag className="h-6 w-6 text-foodly-primary" />
@@ -121,8 +123,9 @@ export const ProfilePage: React.FC = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.025, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)" }}
             >
-              <Card className="rounded-xl shadow-lg border-0 bg-gradient-to-tr from-foodly-primary/20 to-white/80">
+              <Card className="rounded-xl shadow-lg border-0 bg-gradient-to-tr from-foodly-primary/20 to-white/80 backdrop-blur-2xl transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Star className="h-6 w-6 text-yellow-400" />
@@ -154,8 +157,9 @@ export const ProfilePage: React.FC = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}
+              whileHover={{ scale: 1.025, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)" }}
             >
-              <Card className="rounded-xl shadow-lg border-0 bg-white/95">
+              <Card className="rounded-xl shadow-lg border-0 bg-white/60 dark:bg-foodly-primary/10 backdrop-blur-2xl transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Heart className="h-6 w-6 text-pink-500" />
@@ -186,8 +190,9 @@ export const ProfilePage: React.FC = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.28 }}
+              whileHover={{ scale: 1.025, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)" }}
             >
-              <Card className="rounded-xl shadow-lg border-0 bg-white/95">
+              <Card className="rounded-xl shadow-lg border-0 bg-white/60 dark:bg-foodly-primary/10 backdrop-blur-2xl transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Home className="h-6 w-6 text-foodly-primary" />
@@ -218,8 +223,9 @@ export const ProfilePage: React.FC = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ scale: 1.025, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)" }}
             >
-              <Card className="rounded-xl shadow-lg border-0 bg-white/95">
+              <Card className="rounded-xl shadow-lg border-0 bg-white/60 dark:bg-foodly-primary/10 backdrop-blur-2xl transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Settings className="h-6 w-6 text-foodly-primary" />
